@@ -27,6 +27,7 @@ adr_pemeran createElemenPemeran(infotype_pemeran p){
     info(n).gender = p.gender;
     next(n) = NULL;
     prev(n) = NULL;
+    createListRelasi(child(n));
     return n;
 }
 adr_relasi createElemenRelasi(adr_film p){
@@ -94,6 +95,8 @@ void insertLastPemeran(listPemeran &L, adr_pemeran p){
         next(last(L)) = p;
         prev(p) = last(L);
         last(L) = p;
+        next(last(L)) = first(L);
+        prev(first(L)) = last(L);
     }
 }
 void insertLastRelasi(listRelasi &L, adr_relasi p){
@@ -104,6 +107,8 @@ void insertLastRelasi(listRelasi &L, adr_relasi p){
         next(last(L)) = p;
         prev(p) = last(L);
         last(L) = p;
+        next(last(L)) = first(L);
+        prev(first(L)) = last(L);
     }
 }
 
