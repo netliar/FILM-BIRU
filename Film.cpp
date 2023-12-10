@@ -27,7 +27,6 @@ adr_pemeran createElemenPemeran(infotype_pemeran p){
     info(n).gender = p.gender;
     next(n) = NULL;
     prev(n) = NULL;
-    child(n) = NULL;
     return n;
 }
 adr_relasi createElemenRelasi(adr_film p){
