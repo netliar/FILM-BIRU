@@ -1,6 +1,0 @@
-#ifndef ASDASD_H_INCLUDED
-#define ASDASD_H_INCLUDED
-
-
-
-#endif // ASDASD_H_INCLUDED
