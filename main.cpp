@@ -32,7 +32,7 @@ int main(){
             insertLastPemeran(LP, p);
         }else if(pilih == 3){
             mainFilm(LP, LF);
-        }else{
+        }else if(pilih == 4){
             cout << "Terima kasih!" << endl;
             stop = true;
         }

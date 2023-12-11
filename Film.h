@@ -4,8 +4,7 @@
 #define info(p) p->info
 #define next(p) p->next
 #define prev(p) p->prev
-#define childFirst(Z) Z->childFirst
-#define childLast(Z) Z->childLast
+#define child(Z) Z->child
 #define next_film(n) n->next_film
 #define first(L) L.first
 #define last(L) L.last
@@ -14,6 +13,7 @@ using namespace std;
 struct pemeran{
     string nama;
     string gender;
+    int usia;
 };
 
 struct film{
@@ -49,8 +49,7 @@ struct elemenPemeran{
     infotype_pemeran info;
     adr_pemeran next;
     adr_pemeran prev;
-    adr_relasi childFirst;
-    adr_relasi childLast;
+    listRelasi child;
 };
 
 struct elemenFilm{
@@ -99,4 +98,7 @@ int menu();
 
 int sizeFilm(listFilm L);
 int sizePemeran(listPemeran L);
+
+adr_film searchFilm(listFilm LF);
+adr_pemeran searchPemeran(listPemeran LP);
 #endif // FILM_H_INCLUDED

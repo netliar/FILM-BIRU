@@ -28,8 +28,7 @@ adr_pemeran createElemenPemeran(infotype_pemeran p){
     info(n).gender = p.gender;
     next(n) = NULL;
     prev(n) = NULL;
-    childFirst(n) = NULL;
-    childLast(n) = NULL;
+    createListRelasi(child(n));
     return n;
 }
 adr_relasi createElemenRelasi(adr_film p){
@@ -118,14 +117,15 @@ void insertLastRelasi(listRelasi &L, adr_relasi p){
     }
 }
 
-void deleteFirstFilm(listFilm &L, adr_film &p){
-    if(first(L) == NULL){
-        p = NULL;
+void deleteFirstFilm(listFilm &LF, listPemeran &LP, adr_film &pf, adr_pemeran &pp){
+    if(first(LF) == NULL){
+        pf = NULL;
         cout << "LIST FILM KOSONG" << endl;
-    }else if(next(first(L)) == NULL){
-        p = first(L);
-        first(L) = NULL;
-        last(L) = NULL;
+    }else if(next(first(LF)) == NULL){
+        pp = sear
+        pf = first(LF);
+        first(LF) = NULL;
+        last(LF) = NULL;
     }else{
 
     }
@@ -159,6 +159,10 @@ int menu(){
     cout << "1. Tambah Film" << endl;
     cout << "2. Tambah Pemeran" << endl;
     cout << "3. Main Film" << endl;
+    cout << "4. Tunjukkan daftar lengkap film beserta pemeran-pemerannya" << endl;
+    cout << "5. Tunjukkan film dengan partisipasi aktor/aktris tertentu" << endl;
+    cout << "6. Tunjukkan informasi pemeran dalam suatu film." << endl;
+    cout << "7. Tunjukkan informasi teratas untuk satu aktor dan satu aktris" << endl;
     cout << "Pilih: ";
     cin >> pilih;
     return pilih;
@@ -192,18 +196,86 @@ void mainFilm(listPemeran &LP, listFilm &LF){
     }else{
         bool stop = false;
 
-        adr_pemeran arrPemeran[NF];
-        adr_film arrFilm[NF];
 
-        adr_pemeran p = first(LP);
         adr_film f = first(LF);
+        adr_pemeran p = first(LP);
         adr_relasi r = NULL;
-        listRelasi LR;
-        createListRelasi(LR);
 
         int pilihPemeran = 0;
         int pilihFilm = 0;
         int i = 0;
+
+        f = searchFilm(LF);
+        r = createElemenRelasi(f);
+        if(first(child(p)) == NULL){
+            first(child(p)) = r;
+            last(child(p)) = r;
+        }else{
+            adr_relasi q = first(child(p));
+            bool ada = false;
+            while(q != NULL && !ada){
+                if(next_film(q) == next_film(r)){
+                    ada = true;
+                }else{
+                    q = next(q);
+                }
+            }
+            if(ada){
+                cout << "Pilih film yang lain!" << endl;
+            }else{
+                next(q) = r;
+                prev(r) = q;
+                last(child(p)) = r;
+                cout << "Inserted as the last element." << endl;
+
+            }
+        }
+    }
+}
+
+adr_film searchFilm(listFilm LF){
+    int NF = sizeFilm(LF);
+    int pilihFilm = 0;
+    if(NF == 0){
+        cout << "Film Kosong" << endl;
+        return NULL;
+    }else{
+        adr_film arrFilm[NF];
+        adr_film f = first(LF);
+        int i = 0;
+        bool stop = false;
+        cout << "==== List Film ====" << endl;
+        while(f != NULL){
+            arrFilm[i] = f;
+            i++;
+            cout << i << ". " << info(f).nama << " - " << info(f).durasi << " - " << info(f).genre << endl;
+            f = next(f);
+        }
+        while(!stop){
+            cout << "Pilih Film: ";
+            cin >> pilihFilm;
+            if(pilihFilm <= 0 || pilihFilm > NF){
+                cout << "Pilihan tidak ada" << endl;
+            }else{
+                f = arrFilm[pilihFilm-1];
+                stop = true;
+            }
+        }
+        return f;
+    }
+}
+
+adr_pemeran searchPemeran(listPemeran LP){
+    int NP = sizePemeran(LP);
+    int pilihPemeran = 0;
+    if(NP == 0){
+        cout << "Pemeran Kosong" << endl;
+        return NULL;
+    }else{
+        adr_pemeran arrPemeran[NP];
+        adr_pemeran p = first(LP);
+        int i = 0;
+        bool stop = false;
         cout << "==== List Pemeran ====" << endl;
         while(p != NULL){
             arrPemeran[i] = p;
@@ -222,54 +294,7 @@ void mainFilm(listPemeran &LP, listFilm &LF){
                 stop = true;
             }
         }
-
-        i = 0;
-        stop = false;
-        cout << "==== List Film ====" << endl;
-        while(f != NULL){
-            arrFilm[i] = f;
-            i++;
-            cout << i << ". " << info(f).nama << " - " << info(f).durasi << " - " << info(f).genre << endl;
-            f = next(f);
-        }
-        while(!stop){
-            cout << "Pilih Film: ";
-            cin >> pilihFilm;
-            if(pilihFilm <= 0 || pilihFilm > NF){
-                cout << "Pilihan tidak ada" << endl;
-            }else{
-                f = arrFilm[pilihFilm-1];
-                stop = true;
-            }
-        }
-        if(p == NULL && f == NULL){
-            cout << "KSOSONG ANKAJSDLKAS" << endl;
-        }else{
-            r = createElemenRelasi(f);
-            if(childFirst(p) == NULL){
-                childFirst(p) = r;
-                childLast(p) = r;
-            }else{
-                adr_relasi q = childFirst(p);
-                adr_relasi c = childLast(p);
-                bool ada = false;
-                while(q != NULL && !ada){
-                    if(next_film(q) == next_film(c)){
-                        ada = true;
-                    }else{
-                        q = next(q);
-                    }
-                }
-                if(ada){
-                    cout << "Pilih film yang lain!" << endl;
-                }else{
-                    next(c) = r;
-                    prev(r) = c;
-                    childLast(p) = r;
-                    cout << "Inserted as the last element." << endl;
-
-                }
-            }
-        }
+        return p;
     }
+    
 }
