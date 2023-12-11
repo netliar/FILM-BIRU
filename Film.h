@@ -4,7 +4,8 @@
 #define info(p) p->info
 #define next(p) p->next
 #define prev(p) p->prev
-#define child(Z) Z->child
+#define childFirst(Z) Z->childFirst
+#define childLast(Z) Z->childLast
 #define next_film(n) n->next_film
 #define first(L) L.first
 #define last(L) L.last
@@ -48,7 +49,8 @@ struct elemenPemeran{
     infotype_pemeran info;
     adr_pemeran next;
     adr_pemeran prev;
-    listRelasi child;
+    adr_relasi childFirst;
+    adr_relasi childLast;
 };
 
 struct elemenFilm{

@@ -28,7 +28,8 @@ adr_pemeran createElemenPemeran(infotype_pemeran p){
     info(n).gender = p.gender;
     next(n) = NULL;
     prev(n) = NULL;
-    createListRelasi(child(n));
+    childFirst(n) = NULL;
+    childLast(n) = NULL;
     return n;
 }
 adr_relasi createElemenRelasi(adr_film p){
@@ -210,11 +211,7 @@ void mainFilm(listPemeran &LP, listFilm &LF){
             cout << i << ". " << info(p).nama << " - " << info(p).gender << endl;
             p = next(p);
         }
-        int z = 0;
-        while(z < NP){
-            cout << arrPemeran[z] << endl;
-            z++;
-        }
+
         while(!stop){
             cout << "Pilih Pemeran: ";
             cin >> pilihPemeran;
@@ -222,7 +219,6 @@ void mainFilm(listPemeran &LP, listFilm &LF){
                 cout << "Pilihan tidak ada" << endl;
             }else{
                 p = arrPemeran[pilihPemeran-1];
-                createListRelasi(child(p));  // Ensure child list is created
                 stop = true;
             }
         }
@@ -250,8 +246,30 @@ void mainFilm(listPemeran &LP, listFilm &LF){
             cout << "KSOSONG ANKAJSDLKAS" << endl;
         }else{
             r = createElemenRelasi(f);
-            LR = child(p);
-            insertLastRelasi(LR, r);
+            if(childFirst(p) == NULL){
+                childFirst(p) = r;
+                childLast(p) = r;
+            }else{
+                adr_relasi q = childFirst(p);
+                adr_relasi c = childLast(p);
+                bool ada = false;
+                while(q != NULL && !ada){
+                    if(next_film(q) == next_film(c)){
+                        ada = true;
+                    }else{
+                        q = next(q);
+                    }
+                }
+                if(ada){
+                    cout << "Pilih film yang lain!" << endl;
+                }else{
+                    next(c) = r;
+                    prev(r) = c;
+                    childLast(p) = r;
+                    cout << "Inserted as the last element." << endl;
+
+                }
+            }
         }
     }
 }
