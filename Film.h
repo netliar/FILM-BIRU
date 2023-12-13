@@ -18,7 +18,7 @@ struct pemeran{
 
 struct film{
     string nama;
-    int durasi;
+    int terbit;
     string genre;
 };
 
@@ -101,4 +101,6 @@ int sizePemeran(listPemeran L);
 
 adr_film searchFilm(listFilm LF);
 adr_pemeran searchPemeran(listPemeran LP);
+
+adr_relasi searchFilmRelasi(listRelasi LR, adr_film &pf){
 #endif // FILM_H_INCLUDED

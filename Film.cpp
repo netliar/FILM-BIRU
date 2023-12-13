@@ -16,7 +16,7 @@ void createListRelasi(listRelasi &L){
 adr_film createElemenFilm(infotype_film p){
     adr_film n = new elemenFilm;
     info(n).nama = p.nama;
-    info(n).durasi = p.durasi;
+    info(n).terbit = p.terbit;
     info(n).genre = p.genre;
     next(n) = NULL;
     prev(n) = NULL;
@@ -117,15 +117,36 @@ void insertLastRelasi(listRelasi &L, adr_relasi p){
     }
 }
 
+adr_relasi searchFilmRelasi(listRelasi LR, adr_film &pf){
+    adr_relasi c = first(LR);
+    while(c != NULL){
+        if(next_film(c) == pf){
+            return c;
+        }
+        c = next(c);
+    }
+    return c;
+}
+
 void deleteFirstFilm(listFilm &LF, listPemeran &LP, adr_film &pf, adr_pemeran &pp){
     if(first(LF) == NULL){
         pf = NULL;
         cout << "LIST FILM KOSONG" << endl;
     }else if(next(first(LF)) == NULL){
-        pp = sear
         pf = first(LF);
-        first(LF) = NULL;
-        last(LF) = NULL;
+        pp = first(LP);
+        adr_relasi childPP;
+        while(pp != NULL){
+            childPP = searchFilmRelasi(child(pp), pf); 
+            if(childPP == NULL){
+                childPP = NULL;
+            }else if(next(childPP) == NULL){
+                next(prev(childPP)) = NULL;
+                prev(childPP) = NULL;
+            }else{
+                prev(childPP);
+            }
+        }
     }else{
 
     }
@@ -147,7 +168,7 @@ void printShowAllFilm(listFilm L){
     adr_film p = first(L);
     cout << "==== List Film ====" << endl;
     while(p != NULL){
-        cout << i << ". " << info(p).nama << " - " << info(p).durasi << " - " << info(p).genre << endl;
+        cout << i << ". " << info(p).nama << " - " << info(p).terbit << " - " << info(p).genre << endl;
         i++;
         p = next(p);
     }
@@ -248,7 +269,7 @@ adr_film searchFilm(listFilm LF){
         while(f != NULL){
             arrFilm[i] = f;
             i++;
-            cout << i << ". " << info(f).nama << " - " << info(f).durasi << " - " << info(f).genre << endl;
+            cout << i << ". " << info(f).nama << " - " << info(f).terbit << " - " << info(f).genre << endl;
             f = next(f);
         }
         while(!stop){
