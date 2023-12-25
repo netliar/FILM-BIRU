@@ -59,16 +59,6 @@ void insertFirstPemeran(listPemeran &L, adr_pemeran p){
         first(L) = p;
     }
 }
-void insertFirstRelasi(listRelasi &L, adr_relasi p){
-     if(first(L) == NULL){
-        first(L) = p;
-        last(L) = p;
-    }else {
-        next(p) = first(L);
-        prev(first(L)) = p;
-        first(L) = p;
-    }
-}
 
 void insertLastFilm(listFilm &L, adr_film p){
     if(first(L) == NULL){
@@ -90,34 +80,49 @@ void insertLastPemeran(listPemeran &L, adr_pemeran p){
         last(L) = p;
     }
 }
-void insertLastRelasi(listRelasi &L, adr_relasi p){
-    if(first(L) == NULL){
-        first(L) = p;
-        last(L) = p;
-        cout << "BBB" << endl;
-    }else{
-        adr_relasi q = first(L);
-        bool ada = false;
-        while(q != NULL && !ada){
-            if(next_film(q) == next_film(p)){
-                ada = true;
-            }else{
-                q = next(q);
-            }
-        }
-        if(ada){
-            cout << "Pilih film yang lain!" << endl;
-        }else{
-            next(last(L)) = p;
-            prev(p) = last(L);
-            last(L) = p;
-                        cout << "Inserted as the last element." << endl;
 
+bool isExist(listRelasi q, adr_relasi r){
+    adr_relasi z = first(q);
+    bool ada = false;
+    while(z != NULL && !ada){
+        if(next_film(z) == next_film(r)){
+            ada = true;
+        }else{
+            z = next(z);
         }
     }
+    
+    return ada;
+}
+void insertFirstRelasi(listRelasi &L, adr_relasi p){
+     if(first(L) == NULL){
+        first(L) = p;
+        last(L) = p;
+    }else {
+        next(p) = first(L);
+        prev(first(L)) = p;
+        first(L) = p;
+    }
+}
+void insertLastRelasi(listRelasi &LR, adr_film f){
+        adr_relasi r = NULL;
+        r = createElemenRelasi(f);
+        if(first(LR) == NULL){
+            first(LR) = r;
+            last(LR) = r;
+        }else{
+            bool ada = isExist(LR, r);
+            if(ada){
+                cout << "Pilih film yang lain!" << endl;
+            }else{
+                next(last(LR)) = r;
+                prev(r) = last(LR);
+                last(LR) = r;
+            }
+        }
 }
 
-adr_relasi searchFilmRelasi(listRelasi LR, adr_film &pf){
+adr_relasi searchFilmRelasi(listRelasi LR, adr_film pf){
     adr_relasi c = first(LR);
     while(c != NULL){
         if(next_film(c) == pf){
@@ -128,7 +133,40 @@ adr_relasi searchFilmRelasi(listRelasi LR, adr_film &pf){
     return c;
 }
 
-void deleteFirstFilm(listFilm &LF, listPemeran &LP, adr_film &pf, adr_pemeran &pp){
+void deleteFirstRelasi(listRelasi &LR, adr_relasi &r){
+    if(first(LR) == NULL){
+        r = NULL;
+        cout << "TIDAK MAIN FILM" << endl;
+    }else if(next(first(LR))== NULL){
+        first(LR) = NULL;
+        last(LR) = NULL;
+    }else{
+        r = first(LR);
+        first(LR) = next(r); 
+        next(r) = NULL;
+        prev(r) = NULL;
+        prev(first(LR)) = NULL;
+    }
+}
+
+
+void deleteLastRelasi(listRelasi &LR, adr_relasi &r){
+    if(first(LR) == NULL){
+        r = NULL;
+        cout << "TIDAK MAIN FILM" << endl;
+    }else if(next(first(LR))== NULL){
+        first(LR) = NULL;
+        last(LR) = NULL;
+    }else{
+        r = first(LR);
+        first(LR) = next(r); 
+        next(r) = NULL;
+        prev(r) = NULL;
+        prev(first(LR)) = NULL;
+    }
+}
+
+void deleteFirstFilm(listFilm &LF, listPemeran &LP, adr_film pf, adr_pemeran &pp){
     if(first(LF) == NULL){
         pf = NULL;
         cout << "LIST FILM KOSONG" << endl;
@@ -138,17 +176,17 @@ void deleteFirstFilm(listFilm &LF, listPemeran &LP, adr_film &pf, adr_pemeran &p
         adr_relasi childPP;
         while(pp != NULL){
             childPP = searchFilmRelasi(child(pp), pf); 
-            if(childPP == NULL){
-                childPP = NULL;
-            }else if(next(childPP) == NULL){
-                next(prev(childPP)) = NULL;
-                prev(childPP) = NULL;
+            adr_relasi tempChild;
+            if(childPP == first(child(pp)) ){
+                deleteFirstRelasi(child(pp), tempChild);
+            }else if(childPP == last(child(pp))){
+                deleteLastRelasi(child(pp), tempChild);
             }else{
-                prev(childPP);
+
             }
         }
     }else{
-
+        
     }
 }
 
@@ -176,14 +214,15 @@ void printShowAllFilm(listFilm L){
 
 int menu(){
     int pilih;
-    cout << "==== MENU ====" << endl;
-    cout << "1. Tambah Film" << endl;
-    cout << "2. Tambah Pemeran" << endl;
-    cout << "3. Main Film" << endl;
-    cout << "4. Tunjukkan daftar lengkap film beserta pemeran-pemerannya" << endl;
-    cout << "5. Tunjukkan film dengan partisipasi aktor/aktris tertentu" << endl;
-    cout << "6. Tunjukkan informasi pemeran dalam suatu film." << endl;
-    cout << "7. Tunjukkan informasi teratas untuk satu aktor dan satu aktris" << endl;
+    cout << "||" << endl;
+    cout << "||   ==== MENU ====   " << endl;
+    cout << "||1. Tambah Film" << endl;
+    cout << "||2. Tambah Pemeran" << endl;
+    cout << "||3. Main Film" << endl;
+    cout << "||4. Tunjukkan daftar lengkap film beserta pemeran-pemerannya" << endl;
+    cout << "||5. Tunjukkan film dengan partisipasi aktor/aktris tertentu" << endl;
+    cout << "||6. Tunjukkan informasi pemeran dalam suatu film." << endl;
+    cout << "||7. Tunjukkan informasi teratas untuk satu aktor dan satu aktris" << endl;
     cout << "Pilih: ";
     cin >> pilih;
     return pilih;
@@ -210,47 +249,12 @@ int sizePemeran(listPemeran L){
 }
 
 void mainFilm(listPemeran &LP, listFilm &LF){
-    int NP = sizePemeran(LP);
-    int NF = sizeFilm(LF);
-    if(NP == 0 || NF == 0){
+    if(first(LP) == NULL || first(LF) == NULL){
         cout << "Silahkan isi Pemeran atau Film terlebih dahulu!" << endl;
     }else{
-        bool stop = false;
-
-
-        adr_film f = first(LF);
-        adr_pemeran p = first(LP);
-        adr_relasi r = NULL;
-
-        int pilihPemeran = 0;
-        int pilihFilm = 0;
-        int i = 0;
-
-        f = searchFilm(LF);
-        r = createElemenRelasi(f);
-        if(first(child(p)) == NULL){
-            first(child(p)) = r;
-            last(child(p)) = r;
-        }else{
-            adr_relasi q = first(child(p));
-            bool ada = false;
-            while(q != NULL && !ada){
-                if(next_film(q) == next_film(r)){
-                    ada = true;
-                }else{
-                    q = next(q);
-                }
-            }
-            if(ada){
-                cout << "Pilih film yang lain!" << endl;
-            }else{
-                next(q) = r;
-                prev(r) = q;
-                last(child(p)) = r;
-                cout << "Inserted as the last element." << endl;
-
-            }
-        }
+        adr_film f = searchFilm(LF);
+        adr_pemeran p = searchPemeran(LP);
+        insertLastRelasi(child(p), f);
     }
 }
 

@@ -78,15 +78,15 @@ void insertFirstRelasi(listRelasi &L, adr_relasi p);
 
 void insertLastFilm(listFilm &L, adr_film p);
 void insertLastPemeran(listPemeran &L, adr_pemeran p);
-void insertLastRelasi(listRelasi &L, adr_relasi p);
+void insertLastRelasi(listRelasi &LR, adr_film f);
 
-void deleteFirstFilm(listFilm &L, adr_film &p);
+void deleteFirstFilm(listFilm &L, listPemeran &Lp,  adr_film &p);
 void deleteFirstPemeran(listPemeran &L, adr_pemeran &p);
-void deleteFirstRelasi(listRelasi &L, adr_relasi &p);
+void deleteFirstRelasi(listRelasi &LR, adr_relasi &r);
 
 void deleteLastFilm(listFilm &L, adr_film &p);
 void deleteLastPemeran(listPemeran &L, adr_pemeran &p);
-void deleteLastRelasi(listRelasi &L, adr_relasi &p);
+void deleteLastRelasi(listRelasi &LR, adr_relasi &r);
 
 void printShowAllFilm(listFilm L);
 void printShowAllPemeran(listPemeran L);
@@ -102,5 +102,5 @@ int sizePemeran(listPemeran L);
 adr_film searchFilm(listFilm LF);
 adr_pemeran searchPemeran(listPemeran LP);
 
-adr_relasi searchFilmRelasi(listRelasi LR, adr_film &pf){
+adr_relasi searchFilmRelasi(listRelasi LR, adr_film pf);
 #endif // FILM_H_INCLUDED

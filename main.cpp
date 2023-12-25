@@ -13,8 +13,8 @@ int main(){
             infotype_film x;
             cout << "Nama: ";
             cin >> x.nama;
-            cout << "Durasi: ";
-            cin >> x.durasi;
+            cout << "Tahun terbit: ";
+            cin >> x.terbit;
             cout << "Genre: ";
             cin >> x.genre;
             adr_film p;
