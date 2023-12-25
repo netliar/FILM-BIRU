@@ -10,7 +10,9 @@
                 "${file}",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "${fileDirname}/Film.cpp"
+                "${fileDirname}/Film.cpp",
+                "${fileDirname}/pemeran.cpp",
+                "${fileDirname}/relasi.cpp"
             ],
             "options": {
                 "cwd": "C:\\msys64\\ucrt64\\bin"

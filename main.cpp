@@ -33,6 +33,8 @@ int main(){
         }else if(pilih == 3){
             mainFilm(LP, LF);
         }else if(pilih == 4){
+            showFilmWithActors(LP, LF);
+        }else{
             cout << "Terima kasih!" << endl;
             stop = true;
         }
