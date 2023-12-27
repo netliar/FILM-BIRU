@@ -12,7 +12,8 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "${fileDirname}/Film.cpp",
                 "${fileDirname}/pemeran.cpp",
-                "${fileDirname}/relasi.cpp"
+                "${fileDirname}/relasi.cpp",
+                "${fileDirname}/menu.cpp"
             ],
             "options": {
                 "cwd": "C:\\msys64\\ucrt64\\bin"

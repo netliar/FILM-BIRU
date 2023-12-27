@@ -11,12 +11,12 @@ int main(){
         if(pilih == 1){
             cout << "=== Tambah Film ===" << endl;
             infotype_film x;
-            cout << "Nama: ";
-            cin >> x.nama;
+            cout << "Nama: "; 
+            getline(cin >> ws, x.nama);
             cout << "Tahun terbit: ";
             cin >> x.terbit;
             cout << "Genre: ";
-            cin >> x.genre;
+            getline(cin >> ws, x.genre);
             adr_film p;
             p = createElemenFilm(x);
             insertLastFilm(LF, p);
@@ -24,23 +24,32 @@ int main(){
             cout << "=== Tambah Pemeran ===" << endl;
             infotype_pemeran x;
             cout << "Nama: ";
-            cin >> x.nama;
+            getline(cin >> ws, x.nama);
             cout << "Gender: ";
             cin >> x.gender;
             adr_pemeran p;
             p = createElemenPemeran(x);
             insertLastPemeran(LP, p);
         }else if(pilih == 3){
-            mainFilm(LP, LF);
+            deleteFilm(LF, LP);
         }else if(pilih == 4){
+            deletePemeran(LP);
+        }else if(pilih == 5){
+            mainFilm(LP, LF);
+        }else if(pilih == 6){
             showFilmWithActors(LP, LF);
+        }else if(pilih == 7){
+            showFilmWithSpecificActor(LP);
+        }else if (pilih == 8){
+            showActorsFromFilm(LP,LF);
+        }else if (pilih == 9){
+            showTopActorOrActress(LP,LF);
         }else{
             cout << "Terima kasih!" << endl;
             stop = true;
         }
+        cout << endl;
     }
-    printShowAllPemeran(LP);
-    printShowAllFilm(LF);
 
     return 0;
 }

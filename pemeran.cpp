@@ -9,6 +9,7 @@ adr_pemeran createElemenPemeran(infotype_pemeran p){
     adr_pemeran n = new elemenPemeran;
     info(n).nama = p.nama;
     info(n).gender = p.gender;
+    info(n).nFilm = 0;
     next(n) = NULL;
     prev(n) = NULL;
     createListRelasi(child(n));
@@ -37,6 +38,9 @@ void insertLastPemeran(listPemeran &L, adr_pemeran p){
     }
 }
 
+void deletePemeran(listPemeran &LP){
+
+}
 void printShowAllPemeran(listPemeran L){
     int i = 1;
     adr_pemeran p = first(L);
@@ -90,4 +94,14 @@ adr_pemeran searchPemeran(listPemeran LP){
         return p;
     }
     
+}
+
+void showFilmWithSpecificActor(listPemeran LP){
+    adr_pemeran ap = searchPemeran(LP);
+    adr_relasi ar = first(child(ap));
+    cout << "Pemeran: " << info(ap).nama << endl;
+    while(ar != NULL){
+        cout << "- " << info(next_film(ar)).nama << endl;
+        ar = next(ar);
+    }
 }

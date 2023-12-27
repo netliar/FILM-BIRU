@@ -30,14 +30,9 @@ void insertLastRelasi(listRelasi &LR, adr_film f){
             first(LR) = r;
             last(LR) = r;
         }else{
-            bool ada = isExist(LR, r);
-            if(ada){
-                cout << "Pilih film yang lain!" << endl;
-            }else{
-                next(last(LR)) = r;
-                prev(r) = last(LR);
-                last(LR) = r;
-            }
+            next(last(LR)) = r;
+            prev(r) = last(LR);
+            last(LR) = r;
         }
 }
 

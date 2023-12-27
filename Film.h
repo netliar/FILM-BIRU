@@ -14,6 +14,7 @@ struct pemeran{
     string nama;
     string gender;
     int usia;
+    int nFilm;
 };
 
 struct film{
@@ -104,10 +105,15 @@ adr_pemeran searchPemeran(listPemeran LP);
 
 adr_relasi searchFilmRelasi(listRelasi LR, adr_film pf);
 
-void deleteFilm(listFilm &LF, listPemeran &LP, adr_film af);
+void deleteFilm(listFilm &LF, listPemeran &LP);
 void deleteRelasiPemeran(listPemeran &LP);
 void deleteRelasi(listRelasi &LR, adr_relasi ar);
 void showFilmWithActors(listPemeran LP, listFilm LF);
 
-bool isExist(listRelasi q, adr_relasi r);
+bool isExist(listRelasi q, adr_film f);
+
+void showFilmWithSpecificActor(listPemeran LP);
+void showActorsFromFilm(listPemeran LP, listFilm LF);
+void showTopActorOrActress(listPemeran LP, listFilm LF);
+void deletePemeran(listPemeran &LP);
 #endif // FILM_H_INCLUDED

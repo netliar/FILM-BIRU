@@ -36,11 +36,11 @@ void insertLastFilm(listFilm &L, adr_film p){
     }
 }
 
-bool isExist(listRelasi q, adr_relasi r){
+bool isExist(listRelasi q, adr_film f){
     adr_relasi z = first(q);
     bool ada = false;
     while(z != NULL && !ada){
-        if(next_film(z) == next_film(r)){
+        if(next_film(z) == f){
             ada = true;
         }else{
             z = next(z);
@@ -93,21 +93,6 @@ void printShowAllFilm(listFilm L){
     }
 }
 
-int menu(){
-    int pilih;
-    cout << "||   ==== MENU ====   " << endl;
-    cout << "||1. Tambah Film" << endl;
-    cout << "||2. Tambah Pemeran" << endl;
-    cout << "||3. Main Film" << endl;
-    cout << "||4. Tunjukkan daftar lengkap film beserta pemeran-pemerannya" << endl;
-    cout << "||5. Tunjukkan film dengan partisipasi aktor/aktris tertentu" << endl;
-    cout << "||6. Tunjukkan informasi pemeran dalam suatu film." << endl;
-    cout << "||7. Tunjukkan informasi teratas untuk satu aktor dan satu aktris" << endl;
-    cout << "Pilih: ";
-    cin >> pilih;
-    return pilih;
-}
-
 int sizeFilm(listFilm L){
     int i = 0;
     adr_film p = first(L);
@@ -124,7 +109,13 @@ void mainFilm(listPemeran &LP, listFilm &LF){
     }else{
         adr_film f = searchFilm(LF);
         adr_pemeran p = searchPemeran(LP);
-        insertLastRelasi(child(p), f);
+        bool ada = isExist(child(p), f);
+        if(ada){
+            cout << "Pilih film yang lain!" << endl;
+        }else{
+            insertLastRelasi(child(p), f);
+            info(p).nFilm++;
+        }
     }
 }
 
@@ -140,7 +131,6 @@ adr_film searchFilm(listFilm LF){
         int i = 0;
         bool stop = false;
         cout << "==== List Film ====" << endl;
-        cout << "{nama film} - {tahun terbit} - {genre}" << endl;
         while(f != NULL){
             arrFilm[i] = f;
             i++;
@@ -162,7 +152,8 @@ adr_film searchFilm(listFilm LF){
 }
 
 
-void deleteFilm(listFilm &LF, listPemeran &LP, adr_film af){
+void deleteFilm(listFilm &LF, listPemeran &LP){
+    adr_film af = searchFilm(LF);
     if(af == first(LF)){
         deleteFirstFilm(LF, af);
     }else if(af == last(LF)){
@@ -193,5 +184,37 @@ void showFilmWithActors(listPemeran LP, listFilm LF){
         }
         af = next(af);
     }
+}
 
+
+void showActorsFromFilm(listPemeran LP, listFilm LF){
+    adr_pemeran ap = first(LP);
+    adr_film af = searchFilm(LF);
+
+    while (ap != NULL){
+        adr_relasi ar = searchFilmRelasi(child(ap), af);   
+        if(ar != NULL){
+            cout << info(ap).nama << endl;
+        }
+        ap = next(ap);
+    }
+}
+
+void showTopActorOrActress(listPemeran LP, listFilm LF){
+    adr_pemeran ap = first(LP);
+    int Top = 0;
+    while(ap != NULL){
+        if (info(ap).nFilm > Top){
+            Top = info(ap).nFilm;
+        }
+        ap = next(ap);
+    }
+    
+    ap = first(LP);
+    while(ap != NULL){
+        if(Top == info(ap).nFilm){
+            cout << info(ap).nama << endl;
+        }
+        ap = next(ap);
+    }
 }
