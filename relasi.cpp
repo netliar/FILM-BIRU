@@ -64,6 +64,7 @@ void deleteFirstRelasi(listRelasi &LR, adr_relasi &r){
 }
 
 void deleteLastRelasi(listRelasi &LR, adr_relasi &r){
+
     if(first(LR) == NULL){
         r = NULL;
         cout << "TIDAK MAIN FILM" << endl;
@@ -71,21 +72,27 @@ void deleteLastRelasi(listRelasi &LR, adr_relasi &r){
         first(LR) = NULL;
         last(LR) = NULL;
     }else{
-        r = first(LR);
-        first(LR) = next(r); 
-        next(r) = NULL;
+        r = last(LR);
+        last(LR) = prev(r); 
         prev(r) = NULL;
-        prev(first(LR)) = NULL;
+        next(last(LR)) = NULL;
     }
 }
 
-void deleteRelasiPemeran(listPemeran &LP){
+void deleteRelasiPemeran(listPemeran &LP, adr_film af){
     adr_pemeran ap = first(LP);
-    adr_film af = NULL;
     while(ap != NULL){
         adr_relasi ar = searchFilmRelasi(child(ap), af);
         deleteRelasi(child(ap), ar);
         ap = next(ap);
+    }
+}
+
+void deleteAllRelasi(adr_pemeran ap, adr_relasi &ar){
+    listRelasi LR = child(ap);
+    ar = first(LR);
+    while(first(LR) != NULL && last(LR) != NULL){
+        
     }
 }
 

@@ -38,8 +38,51 @@ void insertLastPemeran(listPemeran &L, adr_pemeran p){
     }
 }
 
-void deletePemeran(listPemeran &LP){
+void deleteFirstPemeran(listPemeran &LP, adr_pemeran &ap){
+    if(first(LP) == NULL){
+        ap = NULL;
+        cout << "TIDAK ADA PEMERAN" << endl;
+    }else if(next(first(LP))== NULL){
+        first(LP) = NULL;
+        last(LP) = NULL;
+    }else{
+        ap = first(LP);
+        first(LP) = next(ap); 
+        next(ap) = NULL;
+        prev(ap) = NULL;
+        prev(first(LP)) = NULL;
+    }
+}
 
+void deleteLastPemeran(listPemeran &LP, adr_pemeran &ap){
+    if(first(LP) == NULL){
+        ap = NULL;
+        cout << "TIDAK MAIN FILM" << endl;
+    }else if(next(first(LP))== NULL){
+        first(LP) = NULL;
+        last(LP) = NULL;
+    }else{
+        ap = last(LP);
+        last(LP) = prev(ap); 
+        prev(ap) = NULL;
+        next(last(LP)) = NULL;
+    }
+}
+
+void deletePemeran(listPemeran &LP){
+    adr_pemeran ap = searchPemeran(LP);
+    if(ap == first(LP)){
+        deleteFirstPemeran(LP, ap);
+    }else if(ap == last(LP)){
+        deleteLastPemeran(LP, ap);
+    }else{
+        adr_pemeran prec = prev(ap);
+        next(prec) = next(ap);
+        prev(next(ap)) = prec;
+        prev(ap) = NULL;
+        next(ap) = NULL;
+    }
+    deleteRelasiPemeran(LP);
 }
 void printShowAllPemeran(listPemeran L){
     int i = 1;
