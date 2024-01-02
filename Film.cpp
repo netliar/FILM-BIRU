@@ -113,6 +113,7 @@ void mainFilm(listPemeran &LP, listFilm &LF){
         }else{
             insertLastRelasi(child(ap), af);
             info(ap).nFilm++;
+            cout << info(ap).nama << " bermain film di " << info(af).nama << endl;
         }
     }
 }
@@ -131,14 +132,14 @@ adr_film searchFilm(listFilm LF){
         while(f != NULL){
             arrFilm[i] = f;
             i++;
-            cout << i << ". " << info(f).nama << " - " << info(f).terbit << " - " << info(f).genre << endl;
+            cout << i << ". " << info(f).nama << " (" << info(f).terbit << ", " << info(f).genre << ")" << endl;
             f = next(f);
         }
 
         bool stop = false;
         int pilihFilm = 0;
         while(!stop){
-            cout << "Pilih Film: ";
+            cout << ">> Pilih Film: ";
             cin >> pilihFilm;
             if(pilihFilm <= 0 || pilihFilm > NF){
                 cout << "Pilihan tidak ada" << endl;
@@ -167,11 +168,13 @@ void deleteFilm(listFilm &LF, listPemeran &LP){
             next(af) = NULL;
         }
         deleteRelasiPemeran(LP, af);
+        cout << "Hapus Film Berhasil!" << endl;
     }
 }
 
 void showFilmWithActors(listPemeran LP, listFilm LF){
     adr_film af = first(LF);
+    cout << "=== Daftar Film dan Pemeran ===" << endl;
     while(af != NULL){
         cout << "- " << info(af).nama << endl;
         adr_pemeran ap = first(LP);
@@ -179,9 +182,9 @@ void showFilmWithActors(listPemeran LP, listFilm LF){
         while(ap != NULL){
             adr_relasi ar = searchFilmRelasi(child(ap), af);
             if(ar != NULL){
-                cout << i << ". " <<  info(ap).nama << endl;
+                cout << "   " << i << ". " <<  info(ap).nama << endl;
+                i++;
             }
-            i++;
             ap = next(ap);
         }
         af = next(af);
@@ -193,42 +196,14 @@ void showActorsFromFilm(listPemeran LP, listFilm LF){
     adr_pemeran ap = first(LP);
     adr_film af = searchFilm(LF);
 
+    cout << "Film: " << info(ap).nama << endl;
+    cout << "Daftar Pemeran: " << endl;
     while (ap != NULL){
         adr_relasi ar = searchFilmRelasi(child(ap), af);   
+        int i = 1;
         if(ar != NULL){
-            cout << info(ap).nama << endl;
+            cout << i << ". " << info(ap).nama << " (" << info(ap).gender << ")" << endl;
         }
         ap = next(ap);
-    }
-}
-
-void showTopActorOrActress(listPemeran LP, listFilm LF){
-    adr_pemeran ap = first(LP);
-    adr_pemeran lTop = NULL;
-    adr_pemeran pTop = NULL;
-    int lnTop = 0;
-    int pnTop = 0;
-    while(ap != NULL){
-        if (info(ap).nFilm > lnTop && info(ap).gender == 'L'){
-            lnTop = info(ap).nFilm;
-            lTop = ap;
-        }
-        if (info(ap).nFilm > pnTop && info(ap).gender == 'P'){
-            pnTop = info(ap).nFilm;
-            pTop = ap;
-        }
-        ap = next(ap);
-    }
-
-    cout << "=== Top Aktor dan Aktris ==="  << endl;
-    if(lTop == NULL){
-        cout << "Tidak Ada Aktor" << endl;
-    }else{
-        cout << "Aktor: " << info(lTop).nama << endl;
-    }
-    if(pTop == NULL){
-        cout << "Tidak Ada Aktris" << endl;
-    }else{
-        cout << "Aktris: " << info(pTop).nama << endl;
     }
 }

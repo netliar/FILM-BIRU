@@ -85,6 +85,7 @@ void deletePemeran(listPemeran &LP){
         }
         adr_relasi ar;
         deleteAllRelasiPemeran(child(ap), ar);
+        cout << "Hapus Pemeran Berhasil!" << endl;
     }
 }
 void printShowAllPemeran(listPemeran L){
@@ -121,14 +122,14 @@ adr_pemeran searchPemeran(listPemeran LP){
         while(p != NULL){
             arrPemeran[i] = p;
             i++;
-            cout << i << ". " << info(p).nama << " - " << info(p).gender << endl;
+            cout << i << ". " << info(p).nama << " (" << info(p).gender << ")" << endl;
             p = next(p);
         }
 
         bool stop = false;
         int pilihPemeran = 0;
         while(!stop){
-            cout << "Pilih Pemeran: ";
+            cout << ">> Pilih Pemeran: ";
             cin >> pilihPemeran;
             if(pilihPemeran <= 0 || pilihPemeran > NP){
                 cout << "Pilihan tidak ada" << endl;
@@ -146,8 +147,41 @@ void showFilmWithSpecificActor(listPemeran LP){
     adr_pemeran ap = searchPemeran(LP);
     adr_relasi ar = first(child(ap));
     cout << "Pemeran: " << info(ap).nama << endl;
+    cout << "Daftar Film: " << endl;
+    int i = 1;
     while(ar != NULL){
-        cout << "- " << info(next_film(ar)).nama << "- " << info(next_film(ar)).terbit << "- " << info(next_film(ar)).genre << endl;
+        cout << i << ". "<< info(next_film(ar)).nama << " (" << info(next_film(ar)).terbit << ", " << info(next_film(ar)).genre << ")" << endl;
         ar = next(ar);
+    }
+}
+
+void showTopActorOrActress(listPemeran LP, listFilm LF){
+    adr_pemeran ap = first(LP);
+    adr_pemeran lTop = NULL;
+    adr_pemeran pTop = NULL;
+    int lnTop = 0;
+    int pnTop = 0;
+    while(ap != NULL){
+        if (info(ap).nFilm > lnTop && info(ap).gender == 'L'){
+            lnTop = info(ap).nFilm;
+            lTop = ap;
+        }
+        if (info(ap).nFilm > pnTop && info(ap).gender == 'P'){
+            pnTop = info(ap).nFilm;
+            pTop = ap;
+        }
+        ap = next(ap);
+    }
+
+    cout << "=== Top Aktor dan Aktris ==="  << endl;
+    if(lTop == NULL){
+        cout << "Tidak Ada Aktor" << endl;
+    }else{
+        cout << "Aktor: " << info(lTop).nama << endl;
+    }
+    if(pTop == NULL){
+        cout << "Tidak Ada Aktris" << endl;
+    }else{
+        cout << "Aktris: " << info(pTop).nama << endl;
     }
 }

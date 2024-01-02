@@ -20,6 +20,7 @@ int main(){
             adr_film p;
             p = createElemenFilm(x);
             insertFirstFilm(LF, p);
+            cout << "Tambah Film Berhasil!" << endl;
         }else if(pilih == 2){
             cout << "=== Tambah Pemeran ===" << endl;
             infotype_pemeran x;
@@ -36,6 +37,7 @@ int main(){
             adr_pemeran p;
             p = createElemenPemeran(x);
             insertLastPemeran(LP, p);
+            cout << "Tambah Pemeran Berhasil!" << endl;
         }else if(pilih == 3){
             deleteFilm(LF, LP);
         }else if(pilih == 4){
