@@ -16,7 +16,6 @@ int menu(){
     cout << "||9. Informasi Teratas Untuk Satu Aktor Dan Satu Aktris ||" << endl;
     cout << "||0. Keluar                                             ||" << endl;
     cout << "||======================================================||" << endl;
-    cout << endl;
     cout << ">> Masukkan pilihan: ";
     cin >> pilih;
     return pilih;

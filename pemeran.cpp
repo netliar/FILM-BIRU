@@ -71,19 +71,21 @@ void deleteLastPemeran(listPemeran &LP, adr_pemeran &ap){
 
 void deletePemeran(listPemeran &LP){
     adr_pemeran ap = searchPemeran(LP);
-    if(ap == first(LP)){
-        deleteFirstPemeran(LP, ap);
-    }else if(ap == last(LP)){
-        deleteLastPemeran(LP, ap);
-    }else{
-        adr_pemeran prec = prev(ap);
-        next(prec) = next(ap);
-        prev(next(ap)) = prec;
-        prev(ap) = NULL;
-        next(ap) = NULL;
+    if(ap != NULL){
+        if(ap == first(LP)){
+            deleteFirstPemeran(LP, ap);
+        }else if(ap == last(LP)){
+            deleteLastPemeran(LP, ap);
+        }else{
+            adr_pemeran prec = prev(ap);
+            next(prec) = next(ap);
+            prev(next(ap)) = prec;
+            prev(ap) = NULL;
+            next(ap) = NULL;
+        }
+        adr_relasi ar;
+        deleteAllRelasiPemeran(child(ap), ar);
     }
-    adr_relasi tempR;
-    deleteAllRelasiPemeran(child(ap), tempR);
 }
 void printShowAllPemeran(listPemeran L){
     int i = 1;
@@ -108,7 +110,6 @@ int sizePemeran(listPemeran L){
 
 adr_pemeran searchPemeran(listPemeran LP){
     int NP = sizePemeran(LP);
-    int pilihPemeran = 0;
     if(NP == 0){
         cout << "Pemeran Kosong" << endl;
         return NULL;
@@ -116,7 +117,6 @@ adr_pemeran searchPemeran(listPemeran LP){
         adr_pemeran arrPemeran[NP];
         adr_pemeran p = first(LP);
         int i = 0;
-        bool stop = false;
         cout << "==== List Pemeran ====" << endl;
         while(p != NULL){
             arrPemeran[i] = p;
@@ -125,6 +125,8 @@ adr_pemeran searchPemeran(listPemeran LP){
             p = next(p);
         }
 
+        bool stop = false;
+        int pilihPemeran = 0;
         while(!stop){
             cout << "Pilih Pemeran: ";
             cin >> pilihPemeran;
@@ -145,7 +147,7 @@ void showFilmWithSpecificActor(listPemeran LP){
     adr_relasi ar = first(child(ap));
     cout << "Pemeran: " << info(ap).nama << endl;
     while(ar != NULL){
-        cout << "- " << info(next_film(ar)).nama << endl;
+        cout << "- " << info(next_film(ar)).nama << "- " << info(next_film(ar)).terbit << "- " << info(next_film(ar)).genre << endl;
         ar = next(ar);
     }
 }

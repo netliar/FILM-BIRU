@@ -1,6 +1,7 @@
 #ifndef FILM_H_INCLUDED
 #define FILM_H_INCLUDED
 #include <iostream>
+#include <stdlib.h>
 #define info(p) p->info
 #define next(p) p->next
 #define prev(p) p->prev
@@ -103,14 +104,14 @@ int sizePemeran(listPemeran L);
 adr_film searchFilm(listFilm LF);
 adr_pemeran searchPemeran(listPemeran LP);
 
-adr_relasi searchFilmRelasi(listRelasi LR, adr_film pf);
+adr_relasi searchFilmRelasi(listRelasi LR, adr_film af);
 
 void deleteFilm(listFilm &LF, listPemeran &LP);
 void deleteRelasiPemeran(listPemeran &LP, adr_film af);
 void deleteRelasi(listRelasi &LR, adr_relasi &ar);
 void showFilmWithActors(listPemeran LP, listFilm LF);
 
-bool isExist(listRelasi q, adr_film f);
+bool isExist(listRelasi LR, adr_film af);
 
 void showFilmWithSpecificActor(listPemeran LP);
 void showActorsFromFilm(listPemeran LP, listFilm LF);

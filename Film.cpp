@@ -36,14 +36,14 @@ void insertLastFilm(listFilm &L, adr_film p){
     }
 }
 
-bool isExist(listRelasi q, adr_film f){
-    adr_relasi z = first(q);
+bool isExist(listRelasi LR, adr_film af){
+    adr_relasi ar = first(LR);
     bool ada = false;
-    while(z != NULL && !ada){
-        if(next_film(z) == f){
+    while(ar != NULL && !ada){
+        if(next_film(ar) == af){
             ada = true;
         }else{
-            z = next(z);
+            ar = next(ar);
         }
     }
     
@@ -53,7 +53,6 @@ bool isExist(listRelasi q, adr_film f){
 void deleteFirstFilm(listFilm &LF, adr_film &af){
     if(first(LF) == NULL){
         af = NULL;
-        cout << "LIST FILM KOSONG" << endl;
     }else if(next(first(LF)) == NULL){
         af = first(LF);
         first(LF) = NULL;
@@ -69,7 +68,6 @@ void deleteFirstFilm(listFilm &LF, adr_film &af){
 void deleteLastFilm(listFilm &LF, adr_film &af){
     if(first(LF) == NULL){
         af = NULL;
-        cout << "TIDAK MAIN FILM" << endl;
     }else if(next(first(LF))== NULL){
         af = last(LF);
         first(LF) = NULL;
@@ -107,21 +105,20 @@ void mainFilm(listPemeran &LP, listFilm &LF){
     if(first(LP) == NULL || first(LF) == NULL){
         cout << "Silahkan isi Pemeran atau Film terlebih dahulu!" << endl;
     }else{
-        adr_film f = searchFilm(LF);
-        adr_pemeran p = searchPemeran(LP);
-        bool ada = isExist(child(p), f);
+        adr_film af = searchFilm(LF);
+        adr_pemeran ap = searchPemeran(LP);
+        bool ada = isExist(child(ap), af);
         if(ada){
             cout << "Pilih film yang lain!" << endl;
         }else{
-            insertLastRelasi(child(p), f);
-            info(p).nFilm++;
+            insertLastRelasi(child(ap), af);
+            info(ap).nFilm++;
         }
     }
 }
 
 adr_film searchFilm(listFilm LF){
     int NF = sizeFilm(LF);
-    int pilihFilm = 0;
     if(NF == 0){
         cout << "Film Kosong" << endl;
         return NULL;
@@ -129,7 +126,7 @@ adr_film searchFilm(listFilm LF){
         adr_film arrFilm[NF];
         adr_film f = first(LF);
         int i = 0;
-        bool stop = false;
+        
         cout << "==== List Film ====" << endl;
         while(f != NULL){
             arrFilm[i] = f;
@@ -137,6 +134,9 @@ adr_film searchFilm(listFilm LF){
             cout << i << ". " << info(f).nama << " - " << info(f).terbit << " - " << info(f).genre << endl;
             f = next(f);
         }
+
+        bool stop = false;
+        int pilihFilm = 0;
         while(!stop){
             cout << "Pilih Film: ";
             cin >> pilihFilm;
@@ -154,18 +154,20 @@ adr_film searchFilm(listFilm LF){
 
 void deleteFilm(listFilm &LF, listPemeran &LP){
     adr_film af = searchFilm(LF);
-    if(af == first(LF)){
-        deleteFirstFilm(LF, af);
-    }else if(af == last(LF)){
-        deleteLastFilm(LF, af);
-    }else{
-        adr_film prec = prev(af);
-        next(prec) = next(af);
-        prev(next(af)) = prec;
-        prev(af) = NULL;
-        next(af) = NULL;
+    if(af != NULL){
+        if(af == first(LF)){
+            deleteFirstFilm(LF, af);
+        }else if(af == last(LF)){
+            deleteLastFilm(LF, af);
+        }else{
+            adr_film prec = prev(af);
+            next(prec) = next(af);
+            prev(next(af)) = prec;
+            prev(af) = NULL;
+            next(af) = NULL;
+        }
+        deleteRelasiPemeran(LP, af);
     }
-    deleteRelasiPemeran(LP, af);
 }
 
 void showFilmWithActors(listPemeran LP, listFilm LF){
@@ -202,19 +204,31 @@ void showActorsFromFilm(listPemeran LP, listFilm LF){
 
 void showTopActorOrActress(listPemeran LP, listFilm LF){
     adr_pemeran ap = first(LP);
-    int Top = 0;
+    adr_pemeran lTop = NULL;
+    adr_pemeran pTop = NULL;
+    int lnTop = 0;
+    int pnTop = 0;
     while(ap != NULL){
-        if (info(ap).nFilm > Top){
-            Top = info(ap).nFilm;
+        if (info(ap).nFilm > lnTop && info(ap).gender == 'L'){
+            lnTop = info(ap).nFilm;
+            lTop = ap;
+        }
+        if (info(ap).nFilm > pnTop && info(ap).gender == 'P'){
+            pnTop = info(ap).nFilm;
+            pTop = ap;
         }
         ap = next(ap);
     }
-    
-    ap = first(LP);
-    while(ap != NULL){
-        if(Top == info(ap).nFilm){
-            cout << info(ap).nama << endl;
-        }
-        ap = next(ap);
+
+    cout << "=== Top Aktor dan Aktris ==="  << endl;
+    if(lTop == NULL){
+        cout << "Tidak Ada Aktor" << endl;
+    }else{
+        cout << "Aktor: " << info(lTop).nama << endl;
+    }
+    if(pTop == NULL){
+        cout << "Tidak Ada Aktris" << endl;
+    }else{
+        cout << "Aktris: " << info(pTop).nama << endl;
     }
 }

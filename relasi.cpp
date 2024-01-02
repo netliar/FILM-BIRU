@@ -36,10 +36,10 @@ void insertLastRelasi(listRelasi &LR, adr_film f){
         }
 }
 
-adr_relasi searchFilmRelasi(listRelasi LR, adr_film pf){
+adr_relasi searchFilmRelasi(listRelasi LR, adr_film af){
     adr_relasi c = first(LR);
     while(c != NULL){
-        if(next_film(c) == pf){
+        if(next_film(c) == af){
             return c;
         }
         c = next(c);
@@ -88,8 +88,12 @@ void deleteRelasiPemeran(listPemeran &LP, adr_film af){
 }
 
 void deleteAllRelasiPemeran(listRelasi &LR, adr_relasi &ar){
-    while(first(LR) != NULL && last(LR) != NULL){
-        deleteFirstRelasi(LR, ar);
+    if(first(LR) == NULL && last(LR) == NULL){
+        ar = NULL;
+    }else{
+        while(first(LR) != NULL && last(LR) != NULL){
+            deleteFirstRelasi(LR, ar);
+        }
     }
 }
 
