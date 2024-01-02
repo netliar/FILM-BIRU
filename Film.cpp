@@ -165,7 +165,7 @@ void deleteFilm(listFilm &LF, listPemeran &LP){
         prev(af) = NULL;
         next(af) = NULL;
     }
-    deleteRelasiPemeran(LP);
+    deleteRelasiPemeran(LP, af);
 }
 
 void showFilmWithActors(listPemeran LP, listFilm LF){

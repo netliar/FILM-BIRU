@@ -82,7 +82,8 @@ void deletePemeran(listPemeran &LP){
         prev(ap) = NULL;
         next(ap) = NULL;
     }
-    deleteRelasiPemeran(LP);
+    adr_relasi tempR;
+    deleteAllRelasiPemeran(child(ap), tempR);
 }
 void printShowAllPemeran(listPemeran L){
     int i = 1;

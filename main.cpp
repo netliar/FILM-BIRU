@@ -11,22 +11,28 @@ int main(){
         if(pilih == 1){
             cout << "=== Tambah Film ===" << endl;
             infotype_film x;
-            cout << "Nama: "; 
+            cout << ">> Nama: "; 
             getline(cin >> ws, x.nama);
-            cout << "Tahun terbit: ";
+            cout << ">> Tahun terbit: ";
             cin >> x.terbit;
-            cout << "Genre: ";
+            cout << ">> Genre: ";
             getline(cin >> ws, x.genre);
             adr_film p;
             p = createElemenFilm(x);
-            insertLastFilm(LF, p);
+            insertFirstFilm(LF, p);
         }else if(pilih == 2){
             cout << "=== Tambah Pemeran ===" << endl;
             infotype_pemeran x;
-            cout << "Nama: ";
+            cout << ">> Nama: ";
             getline(cin >> ws, x.nama);
-            cout << "Gender: ";
-            cin >> x.gender;
+            bool isGender = false;
+            while(!isGender){
+                cout << ">> Gender(L/P): ";
+                cin >> x.gender;
+                if(x.gender == 'L' || x.gender == 'P'){
+                    isGender = true;
+                }
+            }
             adr_pemeran p;
             p = createElemenPemeran(x);
             insertLastPemeran(LP, p);

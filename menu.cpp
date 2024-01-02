@@ -17,7 +17,7 @@ int menu(){
     cout << "||0. Keluar                                             ||" << endl;
     cout << "||======================================================||" << endl;
     cout << endl;
-    cout << "Masukkan pilihan: ";
+    cout << ">> Masukkan pilihan: ";
     cin >> pilih;
     return pilih;
 }

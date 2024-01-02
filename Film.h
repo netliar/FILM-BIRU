@@ -12,7 +12,7 @@ using namespace std;
 
 struct pemeran{
     string nama;
-    string gender;
+    char gender;
     int usia;
     int nFilm;
 };
@@ -106,8 +106,8 @@ adr_pemeran searchPemeran(listPemeran LP);
 adr_relasi searchFilmRelasi(listRelasi LR, adr_film pf);
 
 void deleteFilm(listFilm &LF, listPemeran &LP);
-void deleteRelasiPemeran(listPemeran &LP);
-void deleteRelasi(listRelasi &LR, adr_relasi ar);
+void deleteRelasiPemeran(listPemeran &LP, adr_film af);
+void deleteRelasi(listRelasi &LR, adr_relasi &ar);
 void showFilmWithActors(listPemeran LP, listFilm LF);
 
 bool isExist(listRelasi q, adr_film f);
@@ -116,4 +116,5 @@ void showFilmWithSpecificActor(listPemeran LP);
 void showActorsFromFilm(listPemeran LP, listFilm LF);
 void showTopActorOrActress(listPemeran LP, listFilm LF);
 void deletePemeran(listPemeran &LP);
+void deleteAllRelasiPemeran(listRelasi &LR, adr_relasi &ar);
 #endif // FILM_H_INCLUDED

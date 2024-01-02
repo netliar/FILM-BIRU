@@ -58,7 +58,6 @@ void deleteFirstRelasi(listRelasi &LR, adr_relasi &r){
         r = first(LR);
         first(LR) = next(r); 
         next(r) = NULL;
-        prev(r) = NULL;
         prev(first(LR)) = NULL;
     }
 }
@@ -88,15 +87,13 @@ void deleteRelasiPemeran(listPemeran &LP, adr_film af){
     }
 }
 
-void deleteAllRelasi(adr_pemeran ap, adr_relasi &ar){
-    listRelasi LR = child(ap);
-    ar = first(LR);
+void deleteAllRelasiPemeran(listRelasi &LR, adr_relasi &ar){
     while(first(LR) != NULL && last(LR) != NULL){
-        
+        deleteFirstRelasi(LR, ar);
     }
 }
 
-void deleteRelasi(listRelasi &LR, adr_relasi ar){
+void deleteRelasi(listRelasi &LR, adr_relasi &ar){
     if(ar != NULL){
         if(ar == first(LR)){
             deleteFirstRelasi(LR, ar);
