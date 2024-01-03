@@ -83,6 +83,7 @@ void deleteRelasiPemeran(listPemeran &LP, adr_film af){
     while(ap != NULL){
         adr_relasi ar = searchFilmRelasi(child(ap), af);
         deleteRelasi(child(ap), ar);
+        info(ap).nFilm--;
         ap = next(ap);
     }
 }
