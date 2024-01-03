@@ -196,15 +196,17 @@ void showActorsFromFilm(listPemeran LP, listFilm LF){
     adr_pemeran ap = first(LP);
     adr_film af = searchFilm(LF);
 
-    cout << "Film: " << info(ap).nama << endl;
-    cout << "Daftar Pemeran: " << endl;
-    while (ap != NULL){
-        adr_relasi ar = searchFilmRelasi(child(ap), af);   
-        int i = 1;
-        if(ar != NULL){
-            cout << i << ". " << info(ap).nama << " (" << info(ap).gender << ")" << endl;
-            i++;
+    if(ap != NULL && af != NULL){
+        cout << "Film: " << info(ap).nama << endl;
+        cout << "Daftar Pemeran: " << endl;
+        while (ap != NULL){
+            adr_relasi ar = searchFilmRelasi(child(ap), af);   
+            int i = 1;
+            if(ar != NULL){
+                cout << i << ". " << info(ap).nama << " (" << info(ap).gender << ")" << endl;
+                i++;
+            }
+            ap = next(ap);
         }
-        ap = next(ap);
     }
 }
