@@ -145,13 +145,15 @@ adr_pemeran searchPemeran(listPemeran LP){
 
 void showFilmWithSpecificActor(listPemeran LP){
     adr_pemeran ap = searchPemeran(LP);
-    adr_relasi ar = first(child(ap));
-    cout << "Pemeran: " << info(ap).nama << endl;
-    cout << "Daftar Film: " << endl;
-    int i = 1;
-    while(ar != NULL){
-        cout << i << ". "<< info(next_film(ar)).nama << " (" << info(next_film(ar)).terbit << ", " << info(next_film(ar)).genre << ")" << endl;
-        ar = next(ar);
+    if(ap != NULL){
+        adr_relasi ar = first(child(ap));
+        cout << "Pemeran: " << info(ap).nama << endl;
+        cout << "Daftar Film: " << endl;
+        int i = 1;
+        while(ar != NULL){
+            cout << i << ". "<< info(next_film(ar)).nama << " (" << info(next_film(ar)).terbit << ", " << info(next_film(ar)).genre << ")" << endl;
+            ar = next(ar);
+        }
     }
 }
 
