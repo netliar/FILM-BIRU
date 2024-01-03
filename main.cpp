@@ -36,6 +36,18 @@ int main(){
             infotype_pemeran x;
             cout << ">> Nama: ";
             getline(cin >> ws, x.nama);
+            bool isValid = false;
+            while(!isValid){
+                cout << ">> Usia: ";
+                cin >> x.usia;
+                if(cin.fail()){
+                    cout << "Input tidak valid" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }else{
+                    isValid = true;
+                }
+            }
             bool isGender = false;
             while(!isGender){
                 cout << ">> Gender(L/P): ";
