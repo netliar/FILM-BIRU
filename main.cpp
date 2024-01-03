@@ -13,8 +13,18 @@ int main(){
             infotype_film x;
             cout << ">> Nama: "; 
             getline(cin >> ws, x.nama);
-            cout << ">> Tahun terbit: ";
-            cin >> x.terbit;
+            bool isValid = false;
+            while(!isValid){
+                cout << ">> Tahun terbit: ";
+                cin >> x.terbit;
+                if(cin.fail()){
+                    cout << "Input tidak valid" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }else{
+                    isValid = true;
+                }
+            }
             cout << ">> Genre: ";
             getline(cin >> ws, x.genre);
             adr_film p;

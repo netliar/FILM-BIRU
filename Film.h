@@ -2,6 +2,7 @@
 #define FILM_H_INCLUDED
 #include <iostream>
 #include <stdlib.h>
+#include <limits>
 #define info(p) p->info
 #define next(p) p->next
 #define prev(p) p->prev

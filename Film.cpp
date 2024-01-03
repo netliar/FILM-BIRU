@@ -141,8 +141,10 @@ adr_film searchFilm(listFilm LF){
         while(!stop){
             cout << ">> Pilih Film: ";
             cin >> pilihFilm;
-            if(pilihFilm <= 0 || pilihFilm > NF){
+            if(pilihFilm <= 0 || pilihFilm > NF || cin.fail()){
                 cout << "Pilihan tidak ada" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }else{
                 f = arrFilm[pilihFilm-1];
                 stop = true;

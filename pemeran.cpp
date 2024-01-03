@@ -131,8 +131,10 @@ adr_pemeran searchPemeran(listPemeran LP){
         while(!stop){
             cout << ">> Pilih Pemeran: ";
             cin >> pilihPemeran;
-            if(pilihPemeran <= 0 || pilihPemeran > NP){
+            if(pilihPemeran <= 0 || pilihPemeran > NP || cin.fail()){
                 cout << "Pilihan tidak ada" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }else{
                 p = arrPemeran[pilihPemeran-1];
                 stop = true;
