@@ -9,6 +9,7 @@ adr_pemeran createElemenPemeran(infotype_pemeran p){
     adr_pemeran n = new elemenPemeran;
     info(n).nama = p.nama;
     info(n).gender = p.gender;
+    info(n).usia = p.usia;
     info(n).nFilm = 0;
     next(n) = NULL;
     prev(n) = NULL;
